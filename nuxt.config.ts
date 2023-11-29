@@ -1,25 +1,34 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-primevue', '@nuxtjs/color-mode'],
+  app: {
+    head: {
+      link: [
+        {
+          id: "theme-link",
+          rel: "stylesheet",
+          href: "/themes/bootstrap4-dark-blue/theme.css",
+        },
+      ],
+    },
+  },
+  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue", "@nuxtjs/color-mode"],
   primevue: {
     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
-    components: {
-      exclude: ["Editor", "Chart"]
-    }
+    components: {},
   },
   tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
-    configPath: 'tailwind.config',
+    cssPath: "~/assets/css/tailwind.css",
+    configPath: "tailwind.config",
     exposeConfig: false,
     exposeLevel: 2,
     config: {},
-    injectPosition: 'first',
+    injectPosition: "first",
     viewer: true,
   },
   colorMode: {
-    classSuffix: ''
+    classSuffix: "",
   },
-  css: ["primevue/resources/themes/lara-dark-indigo/theme.css"],
-  devtools: { enabled: true }
-})
+  css: ['~/assets/scss/main.scss'],
+  devtools: { enabled: true },
+});
