@@ -10,7 +10,7 @@ const router = useRouter();
 </script>
 <template>
   <div>
-    <Toolbar class="fixed w-full z-10 top-0 h-20">
+    <Toolbar class="fixed w-full z-10 top-0 xs:h-32 xd:h-20">
       <template #start> </template>
 
       <template #center>
@@ -25,7 +25,7 @@ const router = useRouter();
           :options="store.pokemonNames"
           filter
           placeholder="Search"
-          class="xs:w-28 xd:w-56"
+          class="xs:w-32 xd:w-56"
           @change="
             router.push({ path: selectedPokemon });
             selectedPokemon = '';
@@ -39,7 +39,7 @@ const router = useRouter();
           @change="changeTheme"
           :options="themes"
           placeholder="theme"
-          class="w-28"
+          class="w-24"
         />
       </template>
     </Toolbar>

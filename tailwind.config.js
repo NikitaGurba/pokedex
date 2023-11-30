@@ -12,7 +12,6 @@ export default {
       'xd': '600px',
       'lg': '1420px',
       ...defaultTheme.screens,
-      'xs': '100px',
     },
     extend: {
       screens: {

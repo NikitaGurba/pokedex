@@ -37,7 +37,7 @@ onUpdated(() => {
 <template>
   <div ref="column"
     v-if="loaded"
-    class="xs:w-10/12 xd:w-96 m-auto flex flex-row justify-evenly"
+    class="xs:w-11/12 xd:w-96 m-auto flex flex-row justify-evenly"
   >
     <li class="list-none flex flex-col gap-1">
       <ul v-for="i in MAX_COL" :key="i + 'num'">
