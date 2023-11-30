@@ -1,5 +1,5 @@
 <script setup>
-import { MAX_COL } from "@/constants"
+import { MAX_COL } from "@/constants";
 const props = defineProps({
   stats: Object,
   loaded: Boolean,
@@ -13,29 +13,31 @@ const state = computed(() => {
   });
   return [keys, values];
 });
-const column = ref(null)
-function animate()
-{
-  const array = Array.from(column.value.getElementsByClassName('animate'))
+const column = ref(null);
+function animate() {
+  const array = Array.from(column.value.getElementsByClassName("animate"));
   array.map((item, index) => {
-    setTimeout(() => item.className = 'bg-BSBlueLight dark:bg-BSBlueDark h-4 rounded-2xl transition ease-in-out delay-150 ', 50 + (index * 80));
-  })
-  
+    setTimeout(
+      () =>
+        (item.className =
+          "bg-BSBlueLight dark:bg-BSBlueDark h-4 rounded-2xl transition ease-in-out delay-150 "),
+      50 + index * 80
+    );
+  });
 }
 onMounted(() => {
-  if(props.loaded)
-  {
-    animate()
+  if (props.loaded) {
+    animate();
   }
-})
+});
 onUpdated(() => {
-  animate()
-})
-
+  animate();
+});
 </script>
 
 <template>
-  <div ref="column"
+  <div
+    ref="column"
     v-if="loaded"
     class="xs:w-11/12 xd:w-96 m-auto flex flex-row justify-evenly"
   >
@@ -47,7 +49,6 @@ onUpdated(() => {
     <li
       class="list-none w-12 flex flex-col gap-1"
       v-for="(key, index) in state[0]"
-      
       :key="key"
     >
       <ul class="" v-for="i in MAX_COL" :key="i + 'column'">
@@ -55,9 +56,10 @@ onUpdated(() => {
           class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl"
           v-if="state[1][index][0] <= MAX_COL - i"
         ></div>
-          <div v-else
-            class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl animate"
-          ></div>
+        <div
+          v-else
+          class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl animate"
+        ></div>
       </ul>
       <span class="text-center text-xs">
         {{ key[0] }}

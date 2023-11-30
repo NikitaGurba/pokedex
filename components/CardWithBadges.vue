@@ -1,14 +1,14 @@
 <script setup>
-import { TYPE_COLORS } from "@/constants"
+import { TYPE_COLORS } from "@/constants";
 const props = defineProps({
   title: String,
   array: Array,
   loaded: Boolean,
 });
 const color = (name) => {
-  console.log(name)
-  return TYPE_COLORS[name]
-}
+  console.log(name);
+  return TYPE_COLORS[name];
+};
 </script>
 
 <template>
@@ -22,7 +22,12 @@ const color = (name) => {
   >
     <template #title>{{ title }}</template>
     <template #content>
-      <Chip v-for="item in array" :style="{background: `var(${color(item)})`}" :label="item" :key="item + title" />
+      <Chip
+        v-for="item in array"
+        :style="{ background: `var(${color(item)})` }"
+        :label="item"
+        :key="item + title"
+      />
     </template>
   </Card>
   <Card
@@ -35,9 +40,9 @@ const color = (name) => {
   >
     <template #title><Skeleton height="2.5rem"></Skeleton></template>
     <template #content>
-        <Skeleton width="30%" height="2rem"></Skeleton>
-        <Skeleton width="30%" height="2rem"></Skeleton>
-        <Skeleton width="30%" height="2rem"></Skeleton>
+      <Skeleton width="30%" height="2rem"></Skeleton>
+      <Skeleton width="30%" height="2rem"></Skeleton>
+      <Skeleton width="30%" height="2rem"></Skeleton>
     </template>
   </Card>
 </template>

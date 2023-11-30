@@ -1,5 +1,4 @@
 <script setup>
-
 const route = useRoute();
 const router = useRouter();
 const store = useHeaderData();
@@ -31,8 +30,7 @@ const routing = (direction) => {
   router.push({ path: pokemons[id.value + direction].name });
 };
 
-const loaded = computed(() => pending)
-
+const loaded = computed(() => pending);
 </script>
 
 <template>
@@ -60,13 +58,25 @@ const loaded = computed(() => pending)
           </template>
         </Card>
         <div class="flex flex-col gap-4 w-full mt-4">
-          <CardWithBadges title="Types" :array="pokemon ? pokemon.type : []" :loaded="loaded" />
-          <CardWithBadges title="Weaknesses" :array="pokemon ? pokemon.weaknesses : []" :loaded="loaded" />
+          <CardWithBadges
+            title="Types"
+            :array="pokemon ? pokemon.type : []"
+            :loaded="loaded"
+          />
+          <CardWithBadges
+            title="Weaknesses"
+            :array="pokemon ? pokemon.weaknesses : []"
+            :loaded="loaded"
+          />
         </div>
-        <Chars :loaded="loaded" :characteristics="pokemon ? pokemon.characteristics : []" class="w-full mt-4" />
+        <Chars
+          :loaded="loaded"
+          :characteristics="pokemon ? pokemon.characteristics : []"
+          class="w-full mt-4"
+        />
       </div>
       <div class="xl:4/6 2xl:w-3/6 3xl:w-2/6">
-        <Card 
+        <Card
           class="w-full mb-4"
           :pt="{ content: 'text-lg p-0', title: 'p-0' }"
         >
@@ -82,7 +92,6 @@ const loaded = computed(() => pending)
               <Skeleton class="mb-2"></Skeleton>
               <Skeleton class="mb-2"></Skeleton>
               <Skeleton width="70%"></Skeleton>
-              
             </div>
           </template>
         </Card>

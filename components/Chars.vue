@@ -1,12 +1,16 @@
 <script setup>
 const props = defineProps({
   characteristics: Object,
-  loaded: Boolean
+  loaded: Boolean,
 });
 </script>
 
 <template>
-  <Card v-if="loaded" class="w-fit" :pt="{ content: 'p-0 flex flex-row gap-4 flex-wrap' }">
+  <Card
+    v-if="loaded"
+    class="w-fit"
+    :pt="{ content: 'p-0 flex flex-row gap-4 flex-wrap' }"
+  >
     <template #content>
       <div>
         <b>Height</b>
@@ -34,9 +38,13 @@ const props = defineProps({
       </div>
     </template>
   </Card>
-  <Card v-else class="w-fit" :pt="{ content: 'p-0 flex flex-row gap-4 flex-wrap' }">
+  <Card
+    v-else
+    class="w-fit"
+    :pt="{ content: 'p-0 flex flex-row gap-4 flex-wrap' }"
+  >
     <template #content>
-      <Skeleton height="1rem" ></Skeleton>
+      <Skeleton height="1rem"></Skeleton>
     </template>
   </Card>
 </template>
