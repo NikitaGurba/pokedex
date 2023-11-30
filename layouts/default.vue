@@ -2,7 +2,7 @@
   const props = defineProps({
     color: Object,
     changeTheme: Function,
-    themes: Array
+    themes: Array,
   })
   const navLayout = ref()
 </script>

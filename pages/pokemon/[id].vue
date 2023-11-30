@@ -30,13 +30,12 @@ const routing = (direction) => {
   router.push({ path: pokemons[id.value + direction].name });
 };
 
-// const color = (name) => {
-//   if (name === "fire") return "blue";
-// };
+const loaded = computed(() => pending)
+
 </script>
 
 <template>
-  <div class="flex xs:flex-col lg:flex-row" v-if="!pending">
+  <div class="flex xs:flex-col lg:flex-row">
     <div
       class="xs:hidden lg:block xs:w-fit xs:mt-24 xs:h-fit 2xl:fixed left-0 xd:mt-0 xd:h-screen xd:pl-4 xd:pr-4 xs:pl-1 xs:pr-1 2xl:pr-8 2xl:pl-8 cursor-pointer hover:bg-gray-50 hover:bg-opacity-50 hover:dark:bg-opacity-5 hover:dark:bg-BSBlueDark"
       @click="routing(-1)"
@@ -53,32 +52,42 @@ const routing = (direction) => {
       <div class="2xl:w-2/6 3xl:w-1/6">
         <Card :pt="{ content: 'w-fit m-auto' }">
           <template #content>
-            <Image :src="pokemon.imageUrl" alt="Image" preview />
+            <Image v-if="loaded" :src="pokemon.imageUrl" alt="Image" preview />
+            <div v-else class="w-56 h-56">
+              <Skeleton width="100%" height="100%"></Skeleton>
+            </div>
           </template>
         </Card>
         <div class="flex flex-col gap-4 w-full mt-4">
-          <CardWithBadges title="Types" :array="pokemon.type" />
-          <CardWithBadges title="Weaknesses" :array="pokemon.weaknesses" />
+          <CardWithBadges title="Types" :array="pokemon ? pokemon.type : []" :loaded="loaded" />
+          <CardWithBadges title="Weaknesses" :array="pokemon ? pokemon.weaknesses : []" :loaded="loaded" />
         </div>
-        <Chars :characteristics="pokemon.characteristics" class="w-full mt-4" />
+        <Chars :loaded="loaded" :characteristics="pokemon ? pokemon.characteristics : []" class="w-full mt-4" />
       </div>
       <div class="xl:4/6 2xl:w-3/6 3xl:w-2/6">
-        <Card
+        <Card 
           class="w-full mb-4"
           :pt="{ content: 'text-lg p-0', title: 'p-0' }"
         >
           <template #title>
-            <p>Description</p>
+            <p v-if="loaded">Description</p>
+            <Skeleton height="2.5rem" width="50%" v-else></Skeleton>
           </template>
           <template #content>
-            <p>
+            <p v-if="loaded">
               {{ pokemon.description }}
             </p>
+            <div v-else>
+              <Skeleton class="mb-2"></Skeleton>
+              <Skeleton class="mb-2"></Skeleton>
+              <Skeleton width="70%"></Skeleton>
+              
+            </div>
           </template>
         </Card>
         <Card class="w-full" :pt="{ content: 'p-0' }">
           <template #content>
-            <Bar :stats="pokemon.stats" />
+            <Bar :loaded="loaded" :stats="pokemon ? pokemon.stats : []" />
           </template>
         </Card>
       </div>
