@@ -30,9 +30,8 @@ const routing = (direction) => {
   router.push({ path: pokemons[id.value + direction].name });
 };
 
-const loaded = computed(() => pending);
+const loaded = computed(() => false);
 </script>
-
 <template>
   <div class="flex xs:flex-col lg:flex-row">
     <div
@@ -49,7 +48,7 @@ const loaded = computed(() => pending);
       class="xs:w-11/12 lg:w-full 2xl:w-5/6 m-auto mt-24 flex xs:flex-col lg:flex-row gap-4 justify-center"
     >
       <div class="2xl:w-2/6 3xl:w-1/6">
-        <Card :pt="{ content: 'w-fit m-auto' }">
+        <Card :pt="{ content: 'w-fit m-auto p-0' }">
           <template #content>
             <Image v-if="loaded" :src="pokemon.imageUrl" alt="Image" preview />
             <div v-else class="w-56 h-56">
