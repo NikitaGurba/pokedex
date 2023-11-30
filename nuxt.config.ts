@@ -12,7 +12,10 @@ export default defineNuxtConfig({
       ],
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue", "@nuxtjs/color-mode"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
   primevue: {
     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
     components: {},

@@ -13,7 +13,7 @@
                 "abilities": {"name": "Overgrow", "description": "Powers up Grass-type moves when the Pokémon’s HP is low."}
             },
             "type": ["grass", "poison"],
-            "weaknesses": ["fire", "psychic", "flying", "ice", "dsasd", "dsads"],
+            "weaknesses": ["fire", "psychic", "flying", "ice"],
             "stats": [
                 {"hp": "3"},
                 {"attack": "3"},
