@@ -39,7 +39,7 @@ onUpdated(() => {
   <div
     ref="column"
     v-if="loaded"
-    class="xs:w-11/12 xd:w-96 m-auto flex flex-row justify-evenly"
+    class="xs:w-full xd:w-96 m-auto flex flex-row justify-around"
   >
     <li class="list-none flex flex-col gap-1">
       <ul v-for="i in MAX_COL" :key="i + 'num'">
@@ -47,11 +47,11 @@ onUpdated(() => {
       </ul>
     </li>
     <li
-      class="list-none w-12 flex flex-col gap-1"
+      class="list-none xs:min-w-0 xs:w-[3rem] xd:w-12 flex flex-col gap-1"
       v-for="(key, index) in state[0]"
       :key="key"
     >
-      <ul class="" v-for="i in MAX_COL" :key="i + 'column'">
+      <ul v-for="i in MAX_COL" :key="i + 'column'">
         <div
           class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl"
           v-if="state[1][index][0] <= MAX_COL - i"
@@ -61,7 +61,7 @@ onUpdated(() => {
           class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl animate"
         ></div>
       </ul>
-      <span class="text-center text-xs">
+      <span class="text-xs text-center break-words">
         {{ key[0] }}
       </span>
     </li>
