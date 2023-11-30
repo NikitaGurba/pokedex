@@ -8,3 +8,20 @@
   @tailwind components;
   @tailwind utilities;
 }
+@media only screen and (max-width: 540px) {
+  *
+  {
+    font-size: x-small;
+  }
+  .p-card-body
+  {
+    padding: 1rem;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  *
+  {
+    font-size: 0.8rem;
+  }
+}

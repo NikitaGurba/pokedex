@@ -24,7 +24,7 @@ const router = useRouter();
         :options="store.pokemonNames"
         filter
         placeholder="Search"
-        class="w-56"
+        class="xs:w-28 xd:w-56"
         @change="router.push({ path: selectedPokemon }); selectedPokemon = ''"
       />
     </template>
@@ -35,7 +35,7 @@ const router = useRouter();
         @change="changeTheme"
         :options="themes"
         :placeholder="color.value"
-        class="mr-2"
+        class="w-24"
       />
     </template>
   </Toolbar>

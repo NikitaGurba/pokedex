@@ -7,7 +7,17 @@ export default {
     "./node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '100px',
+      'xd': '600px',
+      'lg': '1420px',
+      ...defaultTheme.screens,
+      'xs': '100px',
+    },
     extend: {
+      screens: {
+        '3xl': '1900px',
+      },
       colors: {
         gray: {
           50:  '#e9e9ea',
