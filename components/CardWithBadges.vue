@@ -1,9 +1,14 @@
 <script setup>
+import { TYPE_COLORS } from "@/constants"
 const props = defineProps({
   title: String,
   array: Array,
   loaded: Boolean,
 });
+const color = (name) => {
+  console.log(name)
+  return TYPE_COLORS[name]
+}
 </script>
 
 <template>
@@ -17,7 +22,7 @@ const props = defineProps({
   >
     <template #title>{{ title }}</template>
     <template #content>
-      <Chip v-for="item in array" :label="item" :key="item + title" />
+      <Chip v-for="item in array" :style="{background: `var(${color(item)})`}" :label="item" :key="item + title" />
     </template>
   </Card>
   <Card
