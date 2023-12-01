@@ -15,7 +15,7 @@ const state = computed(() => {
 });
 const column = ref(null);
 function animate() {
-  const array = Array.from(column.value.getElementsByClassName("animate"));
+  const array = Array.from(column.value.getElementsByClassName("animate")).reverse();
   array.map((item, index) => {
     setTimeout(
       () =>

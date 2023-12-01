@@ -1,6 +1,6 @@
 <script setup>
 import { usePrimeVue } from "primevue/config";
-const themes = ["dark", "light"];
+const themes = ["light", "dark"];
 const color = useColorMode();
 const PrimeVue = usePrimeVue();
 const loaded = ref(false)
@@ -15,7 +15,6 @@ const changeTheme = (auto) => {
     nextMode = color.preference === "system" ? color.value : color.preference;
     localStorage.setItem("theme", nextMode)
   }
-  console.log(color.value, color.preference, localStorage.getItem("nuxt-color-mode"))
   PrimeVue.changeTheme(
     `bootstrap4-${themes[Math.abs(themes.indexOf(nextMode) - 1)]}-blue`,
     `bootstrap4-${nextMode}-blue`,

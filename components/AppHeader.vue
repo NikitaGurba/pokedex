@@ -7,6 +7,11 @@ const props = defineProps({
 const selectedPokemon = ref();
 const store = useHeaderData();
 const router = useRouter();
+const checked = ref(Boolean(props.themes.indexOf(props.color.value)))
+watch(checked, () => {
+  props.color.preference = props.themes[Number(checked.value)]
+  props.changeTheme()
+})
 </script>
 <template>
   <div>
@@ -34,13 +39,7 @@ const router = useRouter();
       </template>
 
       <template #end>
-        <Dropdown
-          v-model="color.preference"
-          @change="changeTheme"
-          :options="themes"
-          placeholder="theme"
-          class="w-24"
-        />
+        <InputSwitch v-model="checked"/>
       </template>
     </Toolbar>
   </div>

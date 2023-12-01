@@ -3,9 +3,21 @@ const props = defineProps({
   characteristics: Object,
   loaded: Boolean,
 });
+const visibleDialog = ref(false);
 </script>
 
 <template>
+  <Dialog
+    v-model:visible="visibleDialog"
+    modal
+    :header="characteristics.abilities.name"
+    :style="{ width: '50rem' }"
+    :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+  >
+    <p>
+      {{ characteristics.abilities.description }}
+    </p>
+  </Dialog>
   <Card
     v-if="loaded"
     class="w-fit"
@@ -32,7 +44,10 @@ const props = defineProps({
         <b>Category</b>
         <p>{{ characteristics.category }}</p>
       </div>
-      <div>
+      <div
+        @click="visibleDialog = true"
+        class="cursor-pointer text-blue-500 dark:text-blue-300"
+      >
         <b>Abilities</b>
         <p>{{ characteristics.abilities.name }}</p>
       </div>
