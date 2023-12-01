@@ -7,8 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "deploy": "gh-pages -d dist"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -21,7 +20,6 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
-    "gh-pages": "^6.1.0",
     "pinia": "^2.1.7",
     "primeicons": "^6.0.1",
     "sass": "^1.69.5"
