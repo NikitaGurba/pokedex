@@ -19,8 +19,8 @@ watch(checked, () => {
       <template #start> </template>
 
       <template #center>
-        <div class="xs:mr-1 xd:mr-4 xs:flex xs:flex-col xd:block">
-          <span class="mr-2">{{ store.title }}</span>
+        <div class="xs:mr-2 xd:mr-4 xs:flex xs:flex-col xd:block">
+          <span class="xs:mr-0 xd:mr-2">{{ store.title }}</span>
           <span class="text-zinc-500 dark:text-zinc-300 font-bold"
             >#{{ store.id }}</span
           >
@@ -36,7 +36,7 @@ watch(checked, () => {
             selectedPokemon = '';
           "
         />
-        <InputSwitch v-model="checked" class="xs:ml-1 xd:ml-4"/>
+        <InputSwitch v-model="checked" class="xs:ml-2 xd:ml-4"/>
       </template>
     </Toolbar>
   </div>
