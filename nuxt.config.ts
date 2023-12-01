@@ -2,19 +2,25 @@
 
 export default defineNuxtConfig({
   app: {
+    baseURL: '/pokedex/',
     head: {
       link: [
         {
           id: "theme-link",
           rel: "stylesheet",
-          href: "/themes/bootstrap4-dark-blue/theme.css",
+          href: "/pokedex/themes/bootstrap4-dark-blue/theme.css",
         },
       ],
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue", "@nuxtjs/color-mode", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "nuxt-primevue",
+    "@nuxtjs/color-mode",
+    "@pinia/nuxt",
+  ],
   pinia: {
-    storesDirs: ['./stores/**'],
+    storesDirs: ["./stores/**"],
   },
   primevue: {
     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
@@ -32,6 +38,6 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: "",
   },
-  css: ['~/assets/scss/main.scss'],
+  css: ["~/assets/scss/main.scss"],
   devtools: { enabled: true },
 });

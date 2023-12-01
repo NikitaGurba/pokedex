@@ -20,7 +20,7 @@ function animate() {
     setTimeout(
       () =>
         (item.className =
-          "bg-BSBlueLight dark:bg-BSBlueDark h-4 rounded-2xl transition ease-in-out delay-150 "),
+          "xs:w-[2rem] m-auto xd:w-12 bg-BSBlueLight dark:bg-BSBlueDark h-4 rounded-2xl transition ease-in-out delay-150 "),
       50 + index * 80
     );
   });
@@ -43,7 +43,7 @@ onUpdated(() => {
   >
     <li class="list-none flex flex-col gap-1">
       <ul v-for="i in MAX_COL" :key="i + 'num'">
-        <div class="h-4 text-center">{{ MAX_COL + 1 - i }}</div>
+        <div class="h-4 text-center xs:text-xs xd:text-base">{{ MAX_COL + 1 - i }}</div>
       </ul>
     </li>
     <li
@@ -53,12 +53,12 @@ onUpdated(() => {
     >
       <ul v-for="i in MAX_COL" :key="i + 'column'">
         <div
-          class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl"
+          class="xs:w-[2rem] xd:w-12 m-auto bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl"
           v-if="state[1][index][0] <= MAX_COL - i"
         ></div>
         <div
           v-else
-          class="bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl animate"
+          class="xs:w-[2rem] xd:w-12 m-auto bg-gray-50 dark:bg-gray-50 dark:opacity-5 h-4 rounded-2xl animate"
         ></div>
       </ul>
       <span class="text-xs text-center break-words">

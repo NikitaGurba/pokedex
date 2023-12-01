@@ -15,11 +15,11 @@ watch(checked, () => {
 </script>
 <template>
   <div>
-    <Toolbar class="fixed w-full z-10 top-0 xs:h-32 xd:h-20">
+    <Toolbar class="fixed w-full z-10 top-0 xs:h-20 xd:h-20 justify-center">
       <template #start> </template>
 
       <template #center>
-        <div class="mr-5">
+        <div class="xs:mr-1 xd:mr-4 xs:flex xs:flex-col xd:block">
           <span class="mr-2">{{ store.title }}</span>
           <span class="text-zinc-500 dark:text-zinc-300 font-bold"
             >#{{ store.id }}</span
@@ -36,11 +36,17 @@ watch(checked, () => {
             selectedPokemon = '';
           "
         />
-      </template>
-
-      <template #end>
-        <InputSwitch v-model="checked"/>
+        <InputSwitch v-model="checked" class="xs:ml-1 xd:ml-4"/>
       </template>
     </Toolbar>
   </div>
 </template>
+<style scoped>
+@media only screen and (max-width: 600px) {
+  .p-toolbar 
+  {
+    padding: 0rem;
+  }
+}
+
+</style>

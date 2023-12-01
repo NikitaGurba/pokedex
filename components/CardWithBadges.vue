@@ -6,7 +6,6 @@ const props = defineProps({
   loaded: Boolean,
 });
 const color = (name) => {
-  console.log(name);
   return TYPE_COLORS[name];
 };
 </script>

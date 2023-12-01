@@ -7,13 +7,15 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "gh-pages -d dist -t true"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/color-mode": "^3.3.2",
     "@nuxtjs/tailwindcss": "^6.10.1",
     "eslint": "^8.54.0",
+    "gh-pages": "^6.1.0",
     "nuxt": "^3.8.2",
     "nuxt-primevue": "^0.2.1",
     "vue": "^3.3.8",

@@ -37,7 +37,7 @@ const loaded = computed(() => pending);
 <template>
   <div>
     <article
-      class="xs:w-11/12 lg:w-full 2xl:w-5/6 m-auto xs:mt-36 lg:mt-24 flex xs:flex-col lg:flex-row gap-4 justify-center"
+      class="xs:w-11/12 lg:w-full 2xl:w-5/6 m-auto mt-24 flex xs:flex-col lg:flex-row gap-4 justify-center"
     >
       <Button
         icon="pi pi-arrow-left"
