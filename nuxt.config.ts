@@ -2,6 +2,8 @@
 
 export default defineNuxtConfig({
   app: {
+    baseURL: '/pokedex/',
+    buildAssetsDir: 'assets',
     head: {
       link: [
         {
