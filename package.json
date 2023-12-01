@@ -13,6 +13,7 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/color-mode": "^3.3.2",
     "@nuxtjs/tailwindcss": "^6.10.1",
+    "eslint": "^8.54.0",
     "nuxt": "^3.8.2",
     "nuxt-primevue": "^0.2.1",
     "vue": "^3.3.8",
