@@ -12,7 +12,7 @@ onBeforeMount(async () => {
   loaded.value = true;
 });
 
-const routing = async (direction) => {
+const routing = async (direction) => {  
   if (id.value === 0) {
     id.value = Number(route.params.id);
   }
