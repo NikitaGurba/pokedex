@@ -5,6 +5,7 @@
         "nuxt",
         "nuxtjs",
         "pinia",
+        "pokeapi",
         "pokedex",
         "pokemons",
         "postcss",

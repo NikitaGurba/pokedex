@@ -1,38 +1,29 @@
 <script setup>
 const route = useRoute();
 const router = useRouter();
-const store = useHeaderData();
-let pokemons;
+const pokemonStore = usePokemonStore();
 const pokemon = ref(null);
-const id = ref(0);
 const loaded = ref(false);
-await useFetch("/data.json", {
-  server: false,
-  onResponse({ request, response, options }) {
-    pokemons = response._data.pokemons;
-    if (store.pokemonNames.length === 0) {
-      for (let i = 0; i < pokemons.length; i++) {
-        store.pokemonNames.push(pokemons[i].name);
-      }
-    }
-    for (let i = 0; i < pokemons.length; i++) {
-      if (pokemons[i].name === route.params.id) {
-        pokemon.value = pokemons[i];
-        id.value = i;
-        store.title = pokemon.value.name;
-        store.id = pokemon.value.id;
-        loaded.value = true;
-        break;
-      }
-    }
-  },
+const id = ref(0);
+onBeforeMount(async () => {
+  await pokemonStore.getPokemonData(route.params.id.toLowerCase());
+  pokemon.value = pokemonStore.pokemon;
+  id.value = pokemon.value.id;
+  loaded.value = true;
 });
-const routing = (direction) => {
-  router.push({ path: pokemons[id.value + direction].name });
+
+const routing = async (direction) => {
+  if (id.value === 0) {
+    id.value = Number(route.params.id);
+  }
+  if (id.value + direction <= 0) {
+    direction = 0;
+  }
+  router.push({ path: String(id.value + direction) });
 };
 
-watch(id.value, () => {
-  router.push({ path: pokemons[id.value].name });
+watch(id, () => {
+  router.push({ path: String(id.value) });
 });
 </script>
 <template>
@@ -62,7 +53,7 @@ watch(id.value, () => {
         <div class="flex flex-col gap-4 w-full mt-4">
           <CardWithBadges
             title="Types"
-            :array="pokemon ? pokemon.type : []"
+            :array="pokemon ? pokemon.types : []"
             :loaded="loaded"
           />
           <CardWithBadges
@@ -103,13 +94,13 @@ watch(id.value, () => {
           </template>
         </Card>
       </div>
-      <Paginator
+      <!-- <Paginator
         class="xs:block lg:hidden order-3 mb-16"
         v-model:first="id"
         :rows="1"
-        :totalRecords="store.pokemonNames.length"
+        :totalRecords="headerStore.pokemonNames.length"
       >
-      </Paginator>
+      </Paginator> -->
     </article>
   </div>
 </template>

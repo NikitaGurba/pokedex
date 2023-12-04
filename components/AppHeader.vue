@@ -3,9 +3,7 @@ const props = defineProps({
   color: Object,
   themes: Array,
 });
-const selectedPokemon = ref();
-const store = useHeaderData();
-const router = useRouter();
+const pokemonStore = usePokemonStore();
 const checked = ref()
 onMounted(() => {
   checked.value = Boolean(props.themes.indexOf(props.color.value))
@@ -21,12 +19,12 @@ watch(checked, () => {
 
       <template #center>
         <div class="xs:mr-2 xd:mr-4 xs:flex xs:flex-col xd:block">
-          <span class="xs:mr-0 xd:mr-2">{{ store.title }}</span>
+          <span class="xs:mr-0 xd:mr-2">{{ pokemonStore.pokemon.name }}</span>
           <span class="text-zinc-500 dark:text-zinc-300 font-bold"
-            >#{{ store.id }}</span
+            >#{{ pokemonStore.pokemon.id }}</span
           >
         </div>
-        <Dropdown
+        <!-- <Dropdown
           v-model="selectedPokemon"
           :options="store.pokemonNames"
           filter
@@ -36,7 +34,7 @@ watch(checked, () => {
             router.push({ path: selectedPokemon });
             selectedPokemon = '';
           "
-        />
+        /> -->
         <InputSwitch v-model="checked" class="xs:ml-2 xd:ml-4"/>
       </template>
     </Toolbar>

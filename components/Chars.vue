@@ -42,10 +42,10 @@ const visibleDialog = ref(false);
             }}</span>
           </p>
         </div>
-        <div>
+        <!-- <div>
           <b>Category</b>
           <p>{{ characteristics.category }}</p>
-        </div>
+        </div> -->
         <div
           @click="visibleDialog = true"
           class="cursor-pointer text-blue-500 dark:text-blue-300"

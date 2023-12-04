@@ -12,6 +12,9 @@ export default defineNuxtConfig({
           href: "/pokedex/themes/main.css"
         },
       ],
+      script: [
+        { src: 'https://unpkg.com/pokeapi-js-wrapper/dist/index.js' } // load script in your static folder
+      ]
     },
   },
   modules: [
