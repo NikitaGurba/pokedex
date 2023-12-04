@@ -1,16 +1,17 @@
 <script setup>
 const props = defineProps({
   color: Object,
-  changeTheme: Function,
   themes: Array,
 });
 const selectedPokemon = ref();
 const store = useHeaderData();
 const router = useRouter();
-const checked = ref(Boolean(props.themes.indexOf(props.color.value)))
+const checked = ref()
+onMounted(() => {
+  checked.value = Boolean(props.themes.indexOf(props.color.value))
+})
 watch(checked, () => {
   props.color.preference = props.themes[Number(checked.value)]
-  props.changeTheme()
 })
 </script>
 <template>

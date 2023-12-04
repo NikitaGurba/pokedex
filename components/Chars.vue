@@ -9,6 +9,7 @@ const visibleDialog = ref(false);
 <template>
   <div>
     <Dialog
+    v-if="loaded"
       v-model:visible="visibleDialog"
       modal
       :header="characteristics.abilities.name"
@@ -56,11 +57,12 @@ const visibleDialog = ref(false);
     </Card>
     <Card
       v-else
-      class="w-fit"
+      class="w-full"
       :pt="{ content: 'p-0 flex flex-row gap-4 flex-wrap' }"
     >
       <template #content>
-        <Skeleton height="1rem"></Skeleton>
+        <Skeleton height="2rem" ></Skeleton>
+        <Skeleton height="2rem" ></Skeleton>
       </template>
     </Card>
   </div>

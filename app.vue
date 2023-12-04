@@ -1,38 +1,31 @@
 <script setup>
-import { usePrimeVue } from "primevue/config";
 const themes = ["light", "dark"];
 const color = useColorMode();
-const PrimeVue = usePrimeVue();
-const loaded = ref(false)
-const changeTheme = (auto) => {
-  let nextMode
-  if (auto === true)
-  {
-    nextMode = localStorage.getItem("theme")
-  }
-  else
-  {
-    nextMode = color.preference === "system" ? color.value : color.preference;
-    localStorage.setItem("theme", nextMode)
-  }
-  PrimeVue.changeTheme(
-    `bootstrap4-${themes[Math.abs(themes.indexOf(nextMode) - 1)]}-blue`,
-    `bootstrap4-${nextMode}-blue`,
-    "theme-link",
-    () => {
-      loaded.value = true
-    }
-  );
-};
-onMounted(() => changeTheme(true))
 </script>
 <template>
-  <div v-if="loaded">
-    <NuxtLayout :color="color" :changeTheme="changeTheme" :themes="themes">
+  <div>
+    <NuxtLayout :color="color" :themes="themes">
       <NuxtPage  />
     </NuxtLayout>
   </div>
 </template>
 <style lang="scss">
 @use "~/assets/scss/main.scss";
+:root {
+  --color: #243746;
+  --color-primary: #158876;
+  --color-secondary: #0e2233;
+  --bg: #f3f5f4;
+  --bg-secondary: #fff;
+  --border-color: #ddd;
+}
+
+.dark-mode {
+  --color: #ebf4f1;
+  --color-primary: #41b38a;
+  --color-secondary: #fdf9f3;
+  --bg: #091a28;
+  --bg-secondary: #071521;
+  --border-color: #0d2538;
+}
 </style>

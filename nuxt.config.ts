@@ -8,7 +8,8 @@ export default defineNuxtConfig({
         {
           id: "theme-link",
           rel: "stylesheet",
-          href: "/pokedex/themes/bootstrap4-dark-blue/theme.css",
+          // href: "/pokedex/themes/bootstrap4-dark-blue/theme.css",
+          href: "/pokedex/themes/main.css"
         },
       ],
     },

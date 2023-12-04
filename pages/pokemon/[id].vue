@@ -5,7 +5,8 @@ const store = useHeaderData();
 let pokemons;
 const pokemon = ref(null);
 const id = ref(0);
-const { pending } = await useFetch("/data.json", {
+const loaded = ref(false);
+await useFetch("/data.json", {
   server: false,
   onResponse({ request, response, options }) {
     pokemons = response._data.pokemons;
@@ -20,6 +21,7 @@ const { pending } = await useFetch("/data.json", {
         id.value = i;
         store.title = pokemon.value.name;
         store.id = pokemon.value.id;
+        loaded.value = true;
         break;
       }
     }
@@ -29,10 +31,9 @@ const routing = (direction) => {
   router.push({ path: pokemons[id.value + direction].name });
 };
 
-watch(id, () => {
+watch(id.value, () => {
   router.push({ path: pokemons[id.value].name });
 });
-const loaded = computed(() => pending);
 </script>
 <template>
   <div>
