@@ -5,6 +5,17 @@ const pokemonStore = usePokemonStore();
 const pokemon = ref(null);
 const loaded = ref(false);
 const id = ref(0);
+
+definePageMeta({
+  pageTransition: {
+    name: 'slide-right',
+    mode: 'out-in'
+  },
+  middleware (to, from) {
+    to.meta.pageTransition.name = +to.params.id > +from.params.id ? 'slide-left' : 'slide-right'
+  }
+})
+
 onBeforeMount(async () => {
   await pokemonStore.getPokemonData(route.params.id.toLowerCase());
   pokemon.value = pokemonStore.pokemon;
@@ -104,3 +115,31 @@ watch(id, () => {
     </article>
   </div>
 </template>
+<style>
+body
+{
+  overflow-x: hidden;
+}
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.2s;
+}
+.slide-left-enter-from {
+  opacity: 0;
+  transform: translate(50px, 0);
+}
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translate(-50px, 0);
+}
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translate(-50px, 0);
+}
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translate(50px, 0);
+}
+</style>
