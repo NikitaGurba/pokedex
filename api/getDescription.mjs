@@ -4,5 +4,12 @@ const pokedex = new Pokedex();
 
 export const getDescription = async (id) => {
   const species = await pokedex.getPokemonSpeciesByName(id);
-  return species.flavor_text_entries[0].flavor_text.replaceAll('\n', ' ')
+  let enIndexes = []
+  species.flavor_text_entries.map((item, index) => {
+    
+    if (item.language.name === "en") {
+        enIndexes.push(index)
+    }
+  });
+  return species.flavor_text_entries[enIndexes[enIndexes.length - 2]].flavor_text.replaceAll("\n", " ")
 };
