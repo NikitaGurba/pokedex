@@ -8,6 +8,7 @@ const router = useRouter();
 const route = useRoute();
 const pokemonStore = usePokemonStore();
 const typesStore = useTypesStore();
+const names = usePokemonNamesListStore()
 typesStore.getTypes();
 const selectedPokemon = ref();
 const checked = ref();
@@ -26,13 +27,16 @@ const currentIconInput = computed(() =>
     ? "pi-check"
     : "pi-search"
 );
-const resp = ref();
+const dropElements = ref()
 const searchPokemon = async () => {
-  if (selectedPokemon.value !== "") {
+  if (selectedPokemon.value.length <= 3 && selectedPokemon.value.length > 0)
+  {
     isSearching.value = true;
-    resp.value = await getPokemon(selectedPokemon.value);
+  }
+  if (selectedPokemon.value !== "") {
+    dropElements.value = names.list.filter(str => str.includes(selectedPokemon.value));
     setTimeout(() => {
-      if (resp.value.length !== 0) {
+      if (arr.length !== 0) {
         isSearching.value = false;
         isFound.value = true;
       } else {
@@ -43,18 +47,10 @@ const searchPokemon = async () => {
   } else {
     isSearching.value = false;
     isFound.value = false;
+    dropElements.value = []
   }
 };
 
-const onSubmit = (event) => {
-  event.preventDefault();
-  if (isFound.value) {
-    isSearching.value = false;
-    isFound.value = false;
-    selectedPokemon.value = "";
-    router.push({ path: '/pokemon/' + resp.value.name });
-  }
-};
 if (route.name === 'index')
 {
   watch(typesStore, () => {
@@ -69,6 +65,9 @@ if (route.name === 'index')
   }
 });
 }
+onBeforeMount(async () => {
+  await names.getList()
+})
 </script>
 <template>
   <div>
@@ -76,6 +75,7 @@ if (route.name === 'index')
       <template #start> </template>
 
       <template #center>
+        <router-link to="/">home</router-link>
         <div
           class="xs:mr-2 xd:mr-4 xs:flex xs:flex-col xd:block"
           v-if="route.name === 'pokemon-id'"
@@ -89,7 +89,6 @@ if (route.name === 'index')
         </div>
         <form
           class="p-input-icon-left"
-          @submit="onSubmit"
         >
           <i :class="'pi ' + currentIconInput" />
           <InputText
@@ -99,6 +98,7 @@ if (route.name === 'index')
             placeholder="Search"
             spellcheck="false"
           />
+          {{ dropElements }}
         </form>
         <div v-if="route.name === 'index'">
           <MultiSelect
