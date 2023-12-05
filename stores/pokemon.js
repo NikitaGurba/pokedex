@@ -1,10 +1,10 @@
 import { getPokemon } from "~/api/getPokemon.mjs";
 import { getDescription } from "~/api/getDescription.mjs";
 import { getAbility } from "~/api/getAbilityDescription.mjs";
-import { getType } from "~/api/getWeaknesses.mjs";
+import { getWeaknesses } from "~/api/getWeaknesses.mjs";
 export const usePokemonStore = defineStore("pokemon", {
   state: () => ({
-    pokemon: { name: "Pokemon", id: "0" },
+    pokemon: { name: "", id: "" },
   }),
   actions: {
     async getPokemonData(name) {
@@ -18,7 +18,7 @@ export const usePokemonStore = defineStore("pokemon", {
       });
       let weaknesses = [];
       types.map(async (type) => {
-        let arr = await getType(type);
+        let arr = await getWeaknesses(type);
         weaknesses.push(...arr);
         weaknesses = weaknesses.filter((el) => {
           return types.indexOf(el) < 0;

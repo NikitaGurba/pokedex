@@ -1,8 +1,12 @@
 import { Pokedex } from "pokeapi-js-wrapper";
 
-const pokedex = new Pokedex();
+const pokedex = new Pokedex({cache: true});
 
 export const getPokemon = async (name) => {
-  const pokemon = await pokedex.getPokemonByName(name);
-  return pokemon
+  let pokemon = [];
+  try {
+    pokemon = await pokedex.getPokemonByName(name);
+  } finally {
+    return pokemon;
+  }
 };

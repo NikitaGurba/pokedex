@@ -1,6 +1,6 @@
 import { Pokedex } from "pokeapi-js-wrapper";
 
-const pokedex = new Pokedex();
+const pokedex = new Pokedex({cache: true});
 
 export const getDescription = async (id) => {
   const species = await pokedex.getPokemonSpeciesByName(id);

@@ -22,7 +22,7 @@ const visibleDialog = ref(false);
     </Dialog>
     <Card
       v-if="loaded"
-      class="w-fit"
+      class="w-full"
       :pt="{ content: 'p-0 flex flex-row gap-4 flex-wrap' }"
     >
       <template #content>

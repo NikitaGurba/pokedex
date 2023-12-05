@@ -4,38 +4,43 @@ const router = useRouter();
 const pokemonStore = usePokemonStore();
 const pokemon = ref(null);
 const loaded = ref(false);
-const id = ref(0);
+const id = ref();
 
 definePageMeta({
   pageTransition: {
-    name: 'slide-right',
-    mode: 'out-in'
+    name: "slide-right",
+    mode: "out-in",
   },
-  middleware (to, from) {
-    to.meta.pageTransition.name = +to.params.id > +from.params.id ? 'slide-left' : 'slide-right'
-  }
-})
+  middleware(to, from) {
+    to.meta.pageTransition.name =
+      +to.params.id > +from.params.id ? "slide-left" : "slide-right";
+  },
+});
 
 onBeforeMount(async () => {
   await pokemonStore.getPokemonData(route.params.id.toLowerCase());
   pokemon.value = pokemonStore.pokemon;
-  id.value = pokemon.value.id;
+  id.value = pokemon.value.id - 1;
   loaded.value = true;
+  watch(id, () => {
+    router.push({ path: String(id.value + 1) });
+  });
 });
 
-const routing = async (direction) => {  
+const routing = async (direction) => {
+  
   if (id.value === 0) {
     id.value = Number(route.params.id);
+    if (id.value + direction <= 0) {
+      direction = 0;
+    }
+    router.push({ path: String(id.value + direction + 1) });
   }
-  if (id.value + direction <= 0) {
-    direction = 0;
+  else
+  {
+    router.push({ path: String(id.value + direction + 1) });
   }
-  router.push({ path: String(id.value + direction) });
 };
-
-watch(id, () => {
-  router.push({ path: String(id.value) });
-});
 </script>
 <template>
   <div>
@@ -55,7 +60,13 @@ watch(id, () => {
       <div class="2xl:w-2/6 3xl:w-1/6 order-2">
         <Card :pt="{ content: 'lg:w-fit m-auto p-0 xs:w-8/12' }">
           <template #content>
-            <Image v-if="loaded" :src="pokemon.imageUrl" alt="Image" preview />
+            <Image
+              class="lg:w-56 lg:h-56"
+              v-if="loaded"
+              :src="pokemon.imageUrl"
+              alt="Image"
+              preview
+            />
             <div v-else class="w-56 h-56">
               <Skeleton width="100%" height="100%"></Skeleton>
             </div>
@@ -105,19 +116,19 @@ watch(id, () => {
           </template>
         </Card>
       </div>
-      <!-- <Paginator
-        class="xs:block lg:hidden order-3 mb-16"
+      <Paginator
+        class="xs:block w-full lg:hidden order-3 mb-16"
         v-model:first="id"
         :rows="1"
-        :totalRecords="headerStore.pokemonNames.length"
+        :totalRecords="id + 11"
+        template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
       >
-      </Paginator> -->
+      </Paginator>
     </article>
   </div>
 </template>
 <style>
-body
-{
+body {
   overflow-x: hidden;
 }
 .slide-left-enter-active,
