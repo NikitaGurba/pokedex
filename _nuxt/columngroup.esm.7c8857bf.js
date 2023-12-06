@@ -1,1 +1,0 @@
-import{s as e}from"./basecomponent.esm.6b5a7c00.js";import"./entry.60175b74.js";var t={},n={name:"BaseColumnGroup",extends:e,props:{type:{type:String,default:null}},style:t,provide:function(){return{$parentInstance:this}}},u={name:"ColumnGroup",extends:n,render:function(){return null}};export{u as default};
