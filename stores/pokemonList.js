@@ -10,16 +10,18 @@ export const usePokemonListStore = defineStore("list", {
       limit: LOAD_NUM,
     },
     pageList: [],
+    currentLoad: undefined,
   }),
   actions: {
     async loadNext() {
       const resp = await getPokemonList(this.interval);
       this.interval.offset += LOAD_NUM;
       for (let i = 0; i < resp.results.length; i++) {
-        console.log(i)
+        this.currentLoad = (i+1)*2
         let temp = await getPokemon(resp.results[i].name);
         this.list.push(temp);
       }
+      this.currentLoad = 0
     },
   },
 });

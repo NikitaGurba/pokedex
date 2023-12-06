@@ -58,11 +58,16 @@ onMounted(async () => {
       :data="item"
     ></PokemonItem>
   </main>
-  <div class="flex justify-center">
+  <!-- <div class="flex justify-center">
     <ProgressSpinner class="mt-8 w-16 h-16" strokeWidth="6" v-if="!loaded" />
-  </div>
+  </div> -->
   <div class="flex justify-center mt-8 items-center gap-4 mb-24">
     <span>{{ pokemonListStore.pageList.length }} loaded</span>
     <Button @click="loadPokemons(interval)" label="More"></Button>
   </div>
+  <div class="fixed top-20 w-full h-1;">
+    <div></div>
+    <ProgressBar class="h-1" aria-label="Status" :value="pokemonListStore.currentLoad"><div></div></ProgressBar>
+  </div>
+
 </template>
