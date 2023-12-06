@@ -31,7 +31,7 @@ const linkToPokemon = () => {
             v-for="item in types"
             :style="{ background: `var(${color(item)})` }"
             :label="item"
-            :key="item + title"
+            :key="item"
           />
         </div>
       </template>

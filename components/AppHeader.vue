@@ -1,5 +1,4 @@
 <script setup>
-import { getPokemon } from "@/api/getPokemon.mjs";
 const props = defineProps({
   color: Object,
   themes: Array,
@@ -8,7 +7,8 @@ const router = useRouter();
 const route = useRoute();
 const pokemonStore = usePokemonStore();
 const typesStore = useTypesStore();
-const names = usePokemonNamesListStore()
+const names = usePokemonNamesListStore();
+const selectedDropdown = ref();
 typesStore.getTypes();
 const selectedPokemon = ref();
 const checked = ref();
@@ -27,55 +27,80 @@ const currentIconInput = computed(() =>
     ? "pi-check"
     : "pi-search"
 );
-const dropElements = ref()
+const list = ref(null);
+const dropElements = ref([]);
 const searchPokemon = async () => {
-  if (selectedPokemon.value.length <= 3 && selectedPokemon.value.length > 0)
-  {
+  if (selectedPokemon.value.length < 3 && selectedPokemon.value.length > 0) {
     isSearching.value = true;
-  }
-  if (selectedPokemon.value !== "") {
-    dropElements.value = names.list.filter(str => str.includes(selectedPokemon.value));
-    setTimeout(() => {
-      if (arr.length !== 0) {
-        isSearching.value = false;
-        isFound.value = true;
-      } else {
-        isSearching.value = false;
-        isFound.value = false;
-      }
-    }, 200);
+    dropElements.value = [];
+  } else if (selectedPokemon.value !== "") {
+    dropElements.value = names.listNames.filter((str) =>
+      str.includes(selectedPokemon.value)
+    );
+
+    if (dropElements.value.length !== 0) {
+      isSearching.value = false;
+      isFound.value = true;
+    } else {
+      isSearching.value = false;
+      isFound.value = false;
+    }
   } else {
     isSearching.value = false;
     isFound.value = false;
-    dropElements.value = []
+    dropElements.value = [];
   }
 };
 
-if (route.name === 'index')
-{
+if (route.name === "index") {
   watch(typesStore, () => {
-  if (typesStore.selectedTypes.length !== 0) {
-    let payload =
-      "search=" + String(typesStore.selectedTypes).replaceAll(",", "&search=");
-    window.history.replaceState({}, "", `?${payload}`);
-  }
-  else
-  {
-    window.history.replaceState({}, "", '/pokedex/');
-  }
-});
+    if (typesStore.selectedTypes.length !== 0) {
+      let payload =
+        "search=" +
+        String(typesStore.selectedTypes).replaceAll(",", "&search=");
+      window.history.replaceState({}, "", `?${payload}`);
+    } else {
+      window.history.replaceState({}, "", "/pokedex/");
+    }
+  });
 }
 onBeforeMount(async () => {
-  await names.getList()
-})
+  await names.getListNames();
+});
+watch(selectedDropdown, () => {
+  if (selectedDropdown.value !== "") {
+    router.push({ path: "/pokemon/" + selectedDropdown.value });
+    isSearching.value = false;
+    isFound.value = false;
+    dropElements.value = [];
+    selectedDropdown.value = "";
+    selectedPokemon.value = "";
+  }
+});
+
+function debounce(func, timeout = 500) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
+const processChange = debounce(() => searchPokemon());
 </script>
 <template>
   <div>
-    <Toolbar class="fixed w-full z-10 top-0 xs:h-20 xd:h-20 justify-center" :pt="{center: 'flex gap-4'}">
+    <Toolbar
+      class="fixed w-full z-10 top-0 xs:h-20 xd:h-20 justify-center"
+      :pt="{ center: 'flex gap-4' }"
+    >
       <template #start> </template>
 
       <template #center>
-        <router-link to="/">home</router-link>
+        <router-link class="flex items-center" v-if="route.name === 'pokemon-id'" to="/">
+          <i class="pi pi-arrow-left" />
+        </router-link>
         <div
           class="xs:mr-2 xd:mr-4 xs:flex xs:flex-col xd:block"
           v-if="route.name === 'pokemon-id'"
@@ -87,18 +112,26 @@ onBeforeMount(async () => {
             >#{{ pokemonStore.pokemon.id }}</span
           >
         </div>
-        <form
-          class="p-input-icon-left"
-        >
-          <i :class="'pi ' + currentIconInput" />
-          <InputText
-            @input="searchPokemon"
-            class="xs:w-32 xd:w-56"
-            v-model="selectedPokemon"
-            placeholder="Search"
-            spellcheck="false"
-          />
-          {{ dropElements }}
+        <form>
+          <div class="p-input-icon-left">
+            <i :class="'pi ' + currentIconInput" />
+            <InputText
+              @keyup="processChange"
+              class="xs:w-32 xd:w-56"
+              v-model="selectedPokemon"
+              placeholder="Search"
+              spellcheck="false"
+            />
+          </div>
+          <Listbox
+            ref="list"
+            v-if="dropElements.length !== 0"
+            v-model="selectedDropdown"
+            :options="dropElements"
+            class="w-fit md:w-14rem absolute"
+            listStyle="max-height:250px"
+          >
+          </Listbox>
         </form>
         <div v-if="route.name === 'index'">
           <MultiSelect
@@ -109,10 +142,10 @@ onBeforeMount(async () => {
             filter
             :maxSelectedLabels="3"
             :selectionLimit="3"
-            class="w-full md:w-20rem "
+            class="w-full md:w-20rem"
           />
         </div>
-        <InputSwitch v-model="checked"/>
+        <InputSwitch v-model="checked" />
       </template>
     </Toolbar>
   </div>
