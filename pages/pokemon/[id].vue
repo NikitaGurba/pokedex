@@ -4,7 +4,7 @@ const router = useRouter();
 const pokemonStore = usePokemonStore();
 const pokemon = ref(null);
 const loaded = ref(false);
-const id = ref();
+const id = ref(null);
 
 definePageMeta({
   pageTransition: {
@@ -29,7 +29,7 @@ onBeforeMount(async () => {
 
 const routing = async (direction) => {
   
-  if (id.value === 0) {
+  if (id.value === null) {
     id.value = Number(route.params.id);
     if (id.value + direction <= 0) {
       direction = 0;
