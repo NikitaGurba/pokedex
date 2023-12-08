@@ -38,7 +38,10 @@ const routing = async (direction) => {
   }
   else
   {
-    router.push({ path: String(id.value + direction + 1) });
+    if (id.value + direction + 1 !== 0)
+    {
+      router.push({ path: String(id.value + direction + 1) });
+    }
   }
 };
 </script>
