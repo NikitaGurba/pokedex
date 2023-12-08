@@ -87,13 +87,27 @@ function debounce(func, timeout = 500) {
     }, timeout);
   };
 }
+const flexLayout = computed(() => {
+  return route.name === 'pokemon-id' ? 'xs:flex-row' : 'xs:flex-col xd:flex-row'
+})
+
+const switchLayout = computed(() => {
+  return route.name !== 'pokemon-id' ? 'xs:self-start xs:ml-4 xd:ml-0 xd:self-auto' : ""
+})
+
+const toolBarLayout = computed(() => {
+  return route.name !== 'pokemon-id' ? 'xs:h-40 xd:h-20' : "h-20"
+})
+
 const processChange = debounce(() => searchPokemon());
 </script>
 <template>
   <div>
     <Toolbar
-      class="fixed w-full z-10 top-0 xs:h-40   xd:h-20 p-0"
-      :pt="{ center: 'flex gap-4 w-full justify-center xs:flex-col xd:flex-row' }"
+      :class="`fixed w-full z-10 top-0 p-0 ${toolBarLayout}`"
+      :pt="{
+        center: `flex ${flexLayout} gap-4 w-full justify-center`,
+      }"
     >
       <template #center>
         <router-link
@@ -115,7 +129,7 @@ const processChange = debounce(() => searchPokemon());
           >
         </div>
         <form class="xs:w-11/12 xd:w-40">
-          <div class="p-input-icon-left">
+          <div class="p-input-icon-left w-full">
             <i :class="'pi ' + currentIconInput" />
             <InputText
               @keyup="processChange"
@@ -135,7 +149,7 @@ const processChange = debounce(() => searchPokemon());
           >
           </Listbox>
         </form>
-        <div v-if="route.name === 'index'" class="xs:w-11/12 xd:w-fit  ">
+        <div v-if="route.name === 'index'" class="xs:w-11/12 xd:w-fit">
           <MultiSelect
             v-model="typesStore.selectedTypes"
             :options="typesStore.types"
@@ -147,8 +161,10 @@ const processChange = debounce(() => searchPokemon());
             class="w-full md:w-20rem"
           />
         </div>
-        <div class="w-16 xs:self-start xs:ml-4 xd:ml-0 xd:self-auto flex align-middle">
-        <InputSwitch v-model="checked"/>
+        <div
+          :class="`w-16 ${switchLayout} flex align-middle`"
+        >
+          <InputSwitch v-model="checked" />
         </div>
       </template>
     </Toolbar>

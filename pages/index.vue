@@ -13,8 +13,6 @@ if (route.query.search !== undefined) {
   }
 }
 
-const loaded = ref(true);
-
 const sortPokemons = () => {
   if (typesStore.selectedTypes.length !== 0) {
     pokemonListStore.pageList = [];
@@ -33,17 +31,14 @@ const sortPokemons = () => {
 };
 
 const loadPokemons = async () => {
-  loaded.value = false;
   await pokemonListStore.loadNext();
   sortPokemons();
-  loaded.value = true;
 };
 onMounted(async () => {
   if (pokemonListStore.pageList.length === 0) {
     await loadPokemons();
   }
   watch(typesStore, async () => {
-    console.log("fas");
     sortPokemons();
   });
 });
@@ -59,7 +54,7 @@ watch(pokemonListStore, () => {
 </script>
 <template>
   <main
-    class="w-full pl-1/12 pr-1/12 m-auto xs:mt-36 xd:mt-24 flex gap-4 flex-wrap justify-center"
+    class="w-full pl-1/12 pr-1/12 m-auto xs:mt-44 xd:mt-24 flex gap-4 flex-wrap justify-center"
   >
     <PokemonItem
       v-for="(item, index) in pokemonListStore.pageList"
@@ -74,7 +69,7 @@ watch(pokemonListStore, () => {
     <span>{{ pokemonListStore.pageList.length }} loaded</span>
     <Button @click="loadPokemons(interval)" label="More"></Button>
   </div>
-  <div class="fixed top-20 w-full h-1;">
+  <div class="fixed xs:top-40 xd:top-20 w-full h-1;">
     <div></div>
     <ProgressBar class="h-1" aria-label="Status" :value="pokemonListStore.currentLoad"><div></div></ProgressBar>
   </div>
