@@ -92,13 +92,15 @@ const processChange = debounce(() => searchPokemon());
 <template>
   <div>
     <Toolbar
-      class="fixed w-full z-10 top-0 xs:h-20 xd:h-20 justify-center"
-      :pt="{ center: 'flex gap-4' }"
+      class="fixed w-full z-10 top-0 xs:h-40   xd:h-20 p-0"
+      :pt="{ center: 'flex gap-4 w-full justify-center xs:flex-col xd:flex-row' }"
     >
-      <template #start> </template>
-
       <template #center>
-        <router-link class="flex items-center" v-if="route.name === 'pokemon-id'" to="/">
+        <router-link
+          class="flex items-center"
+          v-if="route.name === 'pokemon-id'"
+          to="/"
+        >
           <i class="pi pi-arrow-left" />
         </router-link>
         <div
@@ -112,12 +114,12 @@ const processChange = debounce(() => searchPokemon());
             >#{{ pokemonStore.pokemon.id }}</span
           >
         </div>
-        <form>
+        <form class="xs:w-11/12 xd:w-40">
           <div class="p-input-icon-left">
             <i :class="'pi ' + currentIconInput" />
             <InputText
               @keyup="processChange"
-              class="xs:w-32 xd:w-56"
+              class="w-full"
               v-model="selectedPokemon"
               placeholder="Search"
               spellcheck="false"
@@ -128,12 +130,12 @@ const processChange = debounce(() => searchPokemon());
             v-if="dropElements.length !== 0"
             v-model="selectedDropdown"
             :options="dropElements"
-            class="w-fit md:w-14rem absolute"
+            class="w-fit md:w-14rem absolute z-10"
             listStyle="max-height:250px"
           >
           </Listbox>
         </form>
-        <div v-if="route.name === 'index'">
+        <div v-if="route.name === 'index'" class="xs:w-11/12 xd:w-fit  ">
           <MultiSelect
             v-model="typesStore.selectedTypes"
             :options="typesStore.types"
@@ -145,7 +147,9 @@ const processChange = debounce(() => searchPokemon());
             class="w-full md:w-20rem"
           />
         </div>
-        <InputSwitch v-model="checked" />
+        <div class="w-16 xs:self-start xs:ml-4 xd:ml-0 xd:self-auto flex align-middle">
+        <InputSwitch v-model="checked"/>
+        </div>
       </template>
     </Toolbar>
   </div>

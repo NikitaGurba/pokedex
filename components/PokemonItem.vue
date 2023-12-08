@@ -16,7 +16,7 @@ const linkToPokemon = () => {
 };
 </script>
 <template>
-  <router-link class="w-56 cursor-pointer" :to="'/pokemon/' + props.data.name">
+  <router-link class="xs:w-10/12 xd:w-56 cursor-pointer" :to="'/pokemon/' + props.data.name">
     <Card
       :pt="{ content: 'p-0' }"
       @click="linkToPokemon"
@@ -26,7 +26,7 @@ const linkToPokemon = () => {
           :src="data.sprites.other['official-artwork'].front_default"
         ></Image>
         <div class="font-bold">{{ data.name }}</div>
-        <div class="flex flex-row gap-1">
+        <div class="flex flex-row gap-1 flex-wrap">
           <Chip
             v-for="item in types"
             :style="{ background: `var(${color(item)})` }"

@@ -47,10 +47,19 @@ onMounted(async () => {
     sortPokemons();
   });
 });
+
+watch(pokemonListStore, () => {
+  let documentHeight = document.body.scrollHeight;
+  let currentScroll = window.scrollY + window.innerHeight;
+  let modifier = 200; 
+  if(currentScroll + modifier > documentHeight) {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+})
 </script>
 <template>
   <main
-    class="w-fit pl-1/12 pr-1/12 m-auto mt-24 flex gap-4 flex-wrap justify-center"
+    class="w-full pl-1/12 pr-1/12 m-auto xs:mt-36 xd:mt-24 flex gap-4 flex-wrap justify-center"
   >
     <PokemonItem
       v-for="(item, index) in pokemonListStore.pageList"
