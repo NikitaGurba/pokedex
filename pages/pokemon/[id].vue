@@ -5,6 +5,7 @@ const pokemonStore = usePokemonStore();
 const pokemon = ref(null);
 const loaded = ref(false);
 const id = ref(null);
+
 definePageMeta({
   pageTransition: {
     name: "slide-right",
@@ -47,7 +48,7 @@ const routing = async (direction) => {
 <template>
   <div>
     <article
-      class="xs:w-11/12 lg:w-full 2xl:w-5/6 m-auto mb-24 mt-24 flex xs:flex-col lg:flex-row gap-4 justify-center"
+      class="xs:w-11/12 lg:w-full 2xl:w-5/6 m-auto mt-24 flex xs:flex-col lg:flex-row gap-4 justify-center"
     >
       <Button
         icon="pi pi-arrow-left"
@@ -92,7 +93,7 @@ const routing = async (direction) => {
           class="w-full mt-4"
         />
       </div>
-      <div class="xs:w-full lg:w-7/12 xl:w-3/6 2xl:w-3/6 3xl:w-5/12 order-3">
+      <div class="xl:4/6 2xl:w-3/6 3xl:w-2/6 order-3">
         <Card
           class="w-full mb-4"
           :pt="{ content: 'text-lg p-0', title: 'p-0' }"
@@ -112,14 +113,9 @@ const routing = async (direction) => {
             </div>
           </template>
         </Card>
-        <Card class="w-full mb-4" :pt="{ content: 'p-0' }">
+        <Card class="w-full" :pt="{ content: 'p-0' }">
           <template #content>
             <Bar :loaded="loaded" :stats="pokemon ? pokemon.stats : []" />
-          </template>
-        </Card>
-        <Card class="w-full p-0" :pt="{ content: 'p-0' }">
-          <template #content>
-            <RandomSlider :loaded="loaded"></RandomSlider>
           </template>
         </Card>
       </div>
