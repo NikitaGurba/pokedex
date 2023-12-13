@@ -6547,7 +6547,7 @@
     padding: 1rem;
   }
 
-  .p-image-action.p-link {
+  .p-image-action .p-link {
     color: #f8f9fa;
     background-color: transparent;
     width: 3rem;
@@ -6566,7 +6566,7 @@
   .p-image-action.p-link i {
     font-size: 1.5rem;
   }
-  .p-image-action.p-link .p-icon {
+  .p-image-action .p-link .p-icon {
     width: 1.5rem;
     height: 1.5rem;
   }
@@ -9999,7 +9999,7 @@
   .dark
     .p-splitbutton.p-button-danger.p-button-text
     > .p-button:enabled:hover,
-  .p-splitbutton.p-button-danger.p-button-text
+  .dark .p-splitbutton.p-button-danger.p-button-text
     > .p-button:not(button):not(a):not(.p-disabled):hover {
     background: rgba(241, 158, 166, 0.04);
     border-color: transparent;
@@ -10015,8 +10015,8 @@
     color: #f19ea6;
   }
 
-  .p-carousel .p-carousel-content .p-carousel-prev,
-  .p-carousel .p-carousel-content .p-carousel-next {
+  .dark .p-carousel .p-carousel-content .p-carousel-prev,
+  .dark .p-carousel .p-carousel-content .p-carousel-next {
     width: 2rem;
     height: 2rem;
     color: rgba(255, 255, 255, 0.6);
@@ -10027,13 +10027,13 @@
     margin: 0.5rem;
   }
   .dark .p-carousel .p-carousel-content .p-carousel-prev:enabled:hover,
-  .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
+  .drak .p-carousel .p-carousel-content .p-carousel-next:enabled:hover {
     color: rgba(255, 255, 255, 0.87);
     border-color: transparent;
     background: transparent;
   }
   .dark .p-carousel .p-carousel-content .p-carousel-prev:focus-visible,
-  .p-carousel .p-carousel-content .p-carousel-next:focus-visible {
+  .dark .p-carousel .p-carousel-content .p-carousel-next:focus-visible {
     outline: 0 none;
     outline-offset: 0;
     box-shadow: 0 0 0 1px #e3f3fe;
@@ -14075,7 +14075,7 @@
     padding: 1rem;
   }
 
-  .dark .p-image-action.p-link {
+  .dark .p-image-action .p-link {
     color: #f8f9fa;
     background-color: transparent;
     width: 3rem;
@@ -14084,17 +14084,17 @@
     transition: color 0.15s, box-shadow 0.15s;
     margin-right: 0.5rem;
   }
-  .dark .p-image-action.p-link:last-child {
+  .dark .p-image-action .p-link:last-child {
     margin-right: 0;
   }
-  .dark .p-image-action.p-link:hover {
+  .dark .p-image-action .p-link:hover {
     color: #f8f9fa;
     background-color: rgba(255, 255, 255, 0.1);
   }
-  .dark .p-image-action.p-link i {
+  .dark .p-image-action .p-link i {
     font-size: 1.5rem;
   }
-  .dark .p-image-action.p-link .p-icon {
+  .dark .p-image-action .p-link .p-icon {
     width: 1.5rem;
     height: 1.5rem;
   }

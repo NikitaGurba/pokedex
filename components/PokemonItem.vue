@@ -16,7 +16,7 @@ const linkToPokemon = () => {
 };
 </script>
 <template>
-  <router-link class="xs:w-10/12 xd:w-56 cursor-pointer" :to="'/pokemon/' + props.data.name">
+  <router-link class="h-full w-full cursor-pointer" :to="'/pokemon/' + props.data.name">
     <Card
       :pt="{ content: 'p-0' }"
       @click="linkToPokemon"
