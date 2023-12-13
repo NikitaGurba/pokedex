@@ -54,7 +54,7 @@ watch(pokemonListStore, () => {
 </script>
 <template>
   <main
-    class="w-11/12 pl-1/12 pr-1/12 m-auto xs:mt-44 xd:mt-24 gap-4 flex-wrap justify-center grid xs:grid-cols-1 xd:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7"
+    class="w-full pl-1/12 pr-1/12 m-auto xs:mt-44 xd:mt-24 flex gap-4 flex-wrap justify-center"
   >
     <PokemonItem
       v-for="(item, index) in pokemonListStore.pageList"
