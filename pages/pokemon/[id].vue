@@ -92,9 +92,9 @@ const routing = async (direction) => {
           class="w-full mt-4"
         />
       </div>
-      <div class="xs:w-full lg:w-7/12 xl:w-3/6 2xl:w-3/6 3xl:w-5/12 order-3">
+      <div class="xs:w-full lg:w-7/12 xl:w-3/6 2xl:w-3/6 3xl:w-5/12 order-3 flex flex-col gap-4">
         <Card
-          class="w-full mb-4"
+          class="w-full"
           :pt="{ content: 'text-lg p-0', title: 'p-0' }"
         >
           <template #title>
@@ -112,7 +112,7 @@ const routing = async (direction) => {
             </div>
           </template>
         </Card>
-        <Card class="w-full mb-4" :pt="{ content: 'p-0' }">
+        <Card class="w-full" :pt="{ content: 'p-0' }">
           <template #content>
             <Bar :loaded="loaded" :stats="pokemon ? pokemon.stats : []" />
           </template>
