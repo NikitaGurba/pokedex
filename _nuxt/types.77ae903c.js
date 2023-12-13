@@ -1,0 +1,1 @@
+import{L as t}from"./entry.b9c4f176.js";import{P as p}from"./getPokemon.a5055cc4.js";const o=new p({cache:!0}),a=async()=>await o.getTypesList(),y=t("types",{state:()=>({types:[],selectedTypes:[]}),actions:{async getTypes(){this.types.length===0&&(await a()).results.map(s=>{this.types.push(s.name)})}}});export{y as u};
