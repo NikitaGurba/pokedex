@@ -1,17 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { TYPE_COLORS } from "@/constants";
 const router = useRouter();
 const props = defineProps({
-  data: Object,
+  data: {type: Object, default: {}}
 });
-const types = [];
-props.data.types.map((item) => {
+const types: string[] = [];
+props.data.types.map((item: {type: {name: string}}) => {
   types.push(item.type.name);
 });
-const color = (name) => {
+const color = (name: string) => {
   return TYPE_COLORS[name];
 };
-const linkToPokemon = () => {
+const linkToPokemon = (): void => {
   router.push({ path: "/pokemon/" + props.data.name });
 };
 </script>

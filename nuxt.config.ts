@@ -42,6 +42,9 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: "",
   },
+  typescript: {
+    typeCheck: true
+  },
   css: ["~/assets/scss/main.scss"],
   devtools: { enabled: true },
 });

@@ -1,7 +1,13 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
-  color: Object,
-  themes: Array,
+  color: {
+    type: Object,
+    default: {},
+  },
+  themes: {
+    type: Array,
+    default: [],
+  },
 });
 const router = useRouter();
 const route = useRoute();
@@ -9,32 +15,25 @@ const pokemonStore = usePokemonStore();
 const typesStore = useTypesStore();
 const names = usePokemonNamesListStore();
 const selectedDropdown = ref();
-typesStore.getTypes();
 const selectedPokemon = ref();
-const checked = ref();
-onMounted(() => {
-  checked.value = Boolean(props.themes.indexOf(props.color.value));
-});
-watch(checked, () => {
-  props.color.preference = props.themes[Number(checked.value)];
-});
-const isSearching = ref(false);
-const isFound = ref(false);
-const currentIconInput = computed(() =>
+const checked = ref<boolean>(false);
+const isSearching = ref<boolean>(false);
+const isFound = ref<boolean>(false);
+const dropElements = ref<string[]>([]);
+const currentIconInput = computed<string>((): string =>
   isSearching.value
     ? "pi-spin pi-spinner"
     : isFound.value
     ? "pi-check"
     : "pi-search"
 );
-const list = ref(null);
-const dropElements = ref([]);
-const searchPokemon = async () => {
+
+const searchPokemon = async (): Promise<any> => {
   if (selectedPokemon.value.length < 3 && selectedPokemon.value.length > 0) {
     isSearching.value = true;
     dropElements.value = [];
   } else if (selectedPokemon.value !== "") {
-    dropElements.value = names.listNames.filter((str) =>
+    dropElements.value = names.listNames.filter((str: string) =>
       str.includes(selectedPokemon.value)
     );
 
@@ -52,6 +51,7 @@ const searchPokemon = async () => {
   }
 };
 
+typesStore.getTypes();
 if (route.name === "index") {
   watch(typesStore, () => {
     if (typesStore.selectedTypes.length !== 0) {
@@ -64,6 +64,7 @@ if (route.name === "index") {
     }
   });
 }
+
 onBeforeMount(async () => {
   await names.getListNames();
 });
@@ -77,29 +78,39 @@ watch(selectedDropdown, () => {
     selectedPokemon.value = "";
   }
 });
+onMounted((): void => {
+  checked.value = Boolean(props.themes.indexOf(props.color.value));
+});
+watch(checked, (): void => {
+  props.color.preference = props.themes[Number(checked.value)];
+});
 
-function debounce(func, timeout = 500) {
-  let timer;
-  return (...args) => {
+function debounce(func: any, timeout: number = 500): any {
+  let timer: number;
+  return () => {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
+    timer = window.setTimeout(() => {
+      func.call();
     }, timeout);
   };
 }
-const flexLayout = computed(() => {
-  return route.name === 'pokemon-id' ? 'xs:flex-row' : 'xs:flex-col xd:flex-row'
-})
+const flexLayout = computed<string>(() => {
+  return route.name === "pokemon-id"
+    ? "xs:flex-row"
+    : "xs:flex-col xd:flex-row";
+});
 
-const switchLayout = computed(() => {
-  return route.name !== 'pokemon-id' ? 'xs:self-start xs:ml-4 xd:ml-0 xd:self-auto' : ""
-})
+const switchLayout = computed<string>(() => {
+  return route.name !== "pokemon-id"
+    ? "xs:self-start xs:ml-4 xd:ml-0 xd:self-auto"
+    : "";
+});
 
-const toolBarLayout = computed(() => {
-  return route.name !== 'pokemon-id' ? 'xs:h-40 xd:h-20' : "h-20"
-})
+const toolBarLayout = computed<string>(() => {
+  return route.name !== "pokemon-id" ? "xs:h-40 xd:h-20" : "h-20";
+});
 
-const processChange = debounce(() => searchPokemon());
+const processChange = debounce(searchPokemon);
 </script>
 <template>
   <div>
@@ -132,7 +143,7 @@ const processChange = debounce(() => searchPokemon());
           <div class="p-input-icon-left w-full">
             <i :class="'pi ' + currentIconInput" />
             <InputText
-              @keyup="processChange"
+              @keyup="processChange()"
               class="w-full"
               v-model="selectedPokemon"
               placeholder="Search"
@@ -140,7 +151,6 @@ const processChange = debounce(() => searchPokemon());
             />
           </div>
           <Listbox
-            ref="list"
             v-if="dropElements.length !== 0"
             v-model="selectedDropdown"
             :options="dropElements"
@@ -161,9 +171,7 @@ const processChange = debounce(() => searchPokemon());
             class="w-full md:w-20rem"
           />
         </div>
-        <div
-          :class="`w-16 ${switchLayout} flex align-middle`"
-        >
+        <div :class="`w-16 ${switchLayout} flex align-middle`">
           <InputSwitch v-model="checked" />
         </div>
       </template>

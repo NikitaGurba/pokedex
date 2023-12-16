@@ -2,10 +2,10 @@ import { Pokedex } from "pokeapi-js-wrapper";
 
 const pokedex = new Pokedex({cache: true});
 
-export const getDescription = async (id) => {
+export const getDescription = async (id: number) => {
   const species = await pokedex.getPokemonSpeciesByName(id);
-  let enIndexes = []
-  species.flavor_text_entries.map((item, index) => {
+  let enIndexes: number[] = []
+  species.flavor_text_entries.map((item: {language: {name: string}}, index: number) => {
     
     if (item.language.name === "en") {
         enIndexes.push(index)

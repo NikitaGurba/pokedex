@@ -1,32 +1,33 @@
-import { getPokemon } from "~/api/getPokemon.mjs";
-import { getDescription } from "~/api/getDescription.mjs";
-import { getAbility } from "~/api/getAbilityDescription.mjs";
-import { getWeaknesses } from "~/api/getWeaknesses.mjs";
+import { getPokemon } from "~/api/getPokemon";
+import { getDescription } from "~/api/getDescription";
+import { getAbility } from "~/api/getAbilityDescription";
+import { getWeaknesses } from "~/api/getWeaknesses";
+
 export const usePokemonStore = defineStore("pokemon", {
   state: () => ({
-    pokemon: { name: "", id: "" },
+    pokemon: <pokemon>{},
   }),
   actions: {
-    async getPokemonData(name) {
+    async getPokemonData(name: string) {
       const resp = await getPokemon(name);
       const abilityId = resp.abilities[0].ability.url
         .split("ability")[1]
         .replaceAll("/", "");
-      let types = [];
-      resp.types.map((item) => {
+      let types: string[] = [];
+      resp.types.map((item: {type: {name: string}}) => {
         types.push(item.type.name);
       });
-      let weaknesses = [];
-      types.map(async (type) => {
-        let arr = await getWeaknesses(type);
+      let weaknesses: string[] = [];
+      types.map(async (type: string) => {
+        let arr: string[] = await getWeaknesses(type);
         weaknesses.push(...arr);
-        weaknesses = weaknesses.filter((el) => {
+        weaknesses = weaknesses.filter((el: string) => {
           return types.indexOf(el) < 0;
         });
         weaknesses = [...new Set(weaknesses)];
       });
-      let stats = [];
-      resp.stats.map((item) => {
+      let stats: Array<stat> = [];
+      resp.stats.map((item: {stat: {name: string}; base_stat: number}) => {
         stats.push({
           [item.stat.name.replace("-", " ")]: Math.floor(
             item.base_stat / 10 - 1

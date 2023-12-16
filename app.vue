@@ -1,5 +1,5 @@
-<script setup>
-const themes = ["light", "dark"];
+<script setup lang="ts">
+const themes:string[] = ["light", "dark"];
 const color = useColorMode();
 </script>
 <template>
