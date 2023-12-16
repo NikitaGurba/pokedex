@@ -1,16 +1,16 @@
-import { getPokemonList } from "~/api/getPokemonsList.mjs";
-import { getPokemon } from "~/api/getPokemon.mjs";
+import { getPokemonList } from "~/api/getPokemonsList";
+import { getPokemon } from "~/api/getPokemon";
 const LOAD_NUM = 50;
+type State = {list: Array<any>; interval: {[item: string]: number}; pageList: Array<any>; currentLoad:number }
 export const usePokemonListStore = defineStore("list", {
-  state: () => ({
+  state: (): State => ({
     list: [],
-    searchList: [],
     interval: {
       offset: 0,
       limit: LOAD_NUM,
     },
     pageList: [],
-    currentLoad: undefined,
+    currentLoad: 0,
   }),
   actions: {
     async loadNext() {

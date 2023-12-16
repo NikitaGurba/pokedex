@@ -1,44 +1,47 @@
-<script setup>
+<script setup lang="ts">
 const route = useRoute();
 const router = useRouter();
 const pokemonStore = usePokemonStore();
-const pokemon = ref(null);
-const loaded = ref(false);
-const id = ref(null);
+const pokemon = ref<pokemon>();
+const loaded = ref<boolean>(false);
+const id = ref<number>(0);
+
 definePageMeta({
   pageTransition: {
     name: "slide-right",
     mode: "out-in",
   },
   middleware(to, from) {
-    to.meta.pageTransition.name =
-      +to.params.id > +from.params.id ? "slide-left" : "slide-right";
+    if (to.meta.pageTransition !== undefined && typeof to.meta.pageTransition !== "boolean") {
+      to.meta.pageTransition.name =
+        +to.params.id > +from.params.id ? "slide-left" : "slide-right";
+    }
   },
 });
 
 onBeforeMount(async () => {
-  await pokemonStore.getPokemonData(route.params.id.toLowerCase());
-  pokemon.value = pokemonStore.pokemon;
-  id.value = pokemon.value.id - 1;
-  loaded.value = true;
-  watch(id, () => {
-    router.push({ path: String(id.value + 1) });
-  });
+  if (!Array.isArray(route.params.id)) {
+    await pokemonStore.getPokemonData(route.params.id.toLowerCase());
+    pokemon.value = pokemonStore.pokemon;
+    if (pokemon.value !== undefined) {
+      id.value = pokemon.value.id - 1;
+      loaded.value = true;
+      watch(id, () => {
+        router.push({ path: String(id.value + 1) });
+      });
+    }
+  }
 });
 
-const routing = async (direction) => {
-  
+const routing = async (direction: number) => {
   if (id.value === null) {
     id.value = Number(route.params.id);
     if (id.value + direction <= 0) {
       direction = 0;
     }
     router.push({ path: String(id.value + direction + 1) });
-  }
-  else
-  {
-    if (id.value + direction + 1 !== 0)
-    {
+  } else {
+    if (id.value + direction + 1 !== 0) {
       router.push({ path: String(id.value + direction + 1) });
     }
   }
@@ -65,7 +68,7 @@ const routing = async (direction) => {
             <Image
               class="lg:w-56 lg:h-56"
               v-if="loaded"
-              :src="pokemon.imageUrl"
+              :src="pokemon?.imageUrl"
               alt="Image"
               preview
             />
@@ -77,33 +80,32 @@ const routing = async (direction) => {
         <div class="flex flex-col gap-4 w-full mt-4">
           <CardWithBadges
             title="Types"
-            :array="pokemon ? pokemon.types : []"
+            :array="pokemon?.types"
             :loaded="loaded"
           />
           <CardWithBadges
             title="Weaknesses"
-            :array="pokemon ? pokemon.weaknesses : []"
+            :array="pokemon?.weaknesses"
             :loaded="loaded"
           />
         </div>
         <Chars
           :loaded="loaded"
-          :characteristics="pokemon ? pokemon.characteristics : []"
+          :characteristics="pokemon?.characteristics"
           class="w-full mt-4"
         />
       </div>
-      <div class="xs:w-full lg:w-7/12 xl:w-3/6 2xl:w-3/6 3xl:w-5/12 order-3">
-        <Card
-          class="w-full mb-4"
-          :pt="{ content: 'text-lg p-0', title: 'p-0' }"
-        >
+      <div
+        class="xs:w-full lg:w-7/12 xl:w-3/6 2xl:w-3/6 3xl:w-5/12 order-3 flex flex-col gap-4"
+      >
+        <Card class="w-full" :pt="{ content: 'text-lg p-0', title: 'p-0' }">
           <template #title>
             <p v-if="loaded">Description</p>
             <Skeleton height="2.5rem" width="50%" v-else></Skeleton>
           </template>
           <template #content>
             <p v-if="loaded">
-              {{ pokemon.description }}
+              {{ pokemon?.description }}
             </p>
             <div v-else>
               <Skeleton class="mb-2"></Skeleton>
@@ -112,9 +114,9 @@ const routing = async (direction) => {
             </div>
           </template>
         </Card>
-        <Card class="w-full mb-4" :pt="{ content: 'p-0' }">
+        <Card class="w-full" :pt="{ content: 'p-0' }">
           <template #content>
-            <Bar :loaded="loaded" :stats="pokemon ? pokemon.stats : []" />
+            <Bar :loaded="loaded" :stats="pokemon?.stats" />
           </template>
         </Card>
         <Card class="w-full p-0" :pt="{ content: 'p-0' }">

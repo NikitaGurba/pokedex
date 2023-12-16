@@ -1,6 +1,5 @@
-<script setup>
-import { reactive, watch } from "vue";
-import { getTypes } from "~/api/getTypes.mjs";
+<script setup lang="ts">
+import { watch } from "vue";
 const route = useRoute();
 
 const typesStore = useTypesStore();
@@ -9,16 +8,23 @@ if (route.query.search !== undefined) {
   if (typeof route.query.search === "string") {
     typesStore.selectedTypes = [route.query.search];
   } else {
-    typesStore.selectedTypes = route.query.search;
+    if(route.query.search !== null)
+    {
+      const array: string[] = []
+      route.query.search.map((item) => {
+        array.push(String(item))
+      })
+      typesStore.selectedTypes = array
+    }
   }
 }
 
-const sortPokemons = () => {
+const sortPokemons = (): void => {
   if (typesStore.selectedTypes.length !== 0) {
     pokemonListStore.pageList = [];
     for (let i = 0; i < pokemonListStore.list.length; i++) {
-      let types = [];
-      pokemonListStore.list[i].types.map((type) => {
+      let types: string[] = [];
+      pokemonListStore.list[i].types.map((type: {type: {name: string}}) => {
         types.push(type.type.name);
       });
       if (typesStore.selectedTypes.every((i) => types.includes(i))) {
@@ -30,7 +36,7 @@ const sortPokemons = () => {
   }
 };
 
-const loadPokemons = async () => {
+const loadPokemons = async (): Promise<void> => {
   await pokemonListStore.loadNext();
   sortPokemons();
 };
@@ -67,7 +73,7 @@ watch(pokemonListStore, () => {
   </div> -->
   <div class="flex justify-center mt-8 items-center gap-4 mb-24">
     <span>{{ pokemonListStore.pageList.length }} loaded</span>
-    <Button @click="loadPokemons(interval)" label="More"></Button>
+    <Button @click="loadPokemons()" label="More"></Button>
   </div>
   <div class="fixed xs:top-40 xd:top-20 w-full h-1;">
     <div></div>

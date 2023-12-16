@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { TYPE_COLORS } from "@/constants";
 const props = defineProps({
-  title: String,
-  array: Array,
-  loaded: Boolean,
+  title: {type: String, default: ""},
+  array: {type: Array<string>, default: []},
+  loaded: {type: Boolean, default: false}
 });
-const color = (name) => {
+const color = (name: string) => {
   return TYPE_COLORS[name];
 };
 </script>

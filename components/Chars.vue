@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
-  characteristics: Object,
-  loaded: Boolean,
+  characteristics: {type: Object, default: {}},
+  loaded: {type: Boolean, default: false}
 });
-const visibleDialog = ref(false);
+const visibleDialog = ref<boolean>(false);
 </script>
 
 <template>

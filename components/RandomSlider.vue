@@ -1,14 +1,16 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
-  loaded: Boolean,
+  loaded: {type: Boolean, default: false}
 });
 const names = usePokemonNamesListStore();
 const randomPokemons = useRandomPokemonsStore();
-const namesRandom = [];
-const randomLoaded = ref(false);
-const amountOfRandomPokemonsDisplay = ref();
-const randomNumber = (minimum, maximum) =>
+const namesRandom: string[] = [];
+const randomLoaded = ref<boolean>(false);
+const amountOfRandomPokemonsDisplay = ref<number>(0);
+
+const randomNumber = (minimum: number, maximum: number): number =>
   Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+
 onBeforeMount(async () => {
   await names.getListNames();
   for (let i = 0; i < 10; i++) {
@@ -18,12 +20,12 @@ onBeforeMount(async () => {
   randomLoaded.value = true;
 });
 
-function debounce(func, timeout = 300) {
-  let timer;
-  return (...args) => {
+function debounce(func: any, timeout: number = 300): any {
+  let timer: number;
+  return () => {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
+    timer = window.setTimeout(() => {
+      func.apply();
     }, timeout);
   };
 }
@@ -33,13 +35,12 @@ onMounted(() => {
   onResizeFunc();
 });
 
-function onResizeFunc() {
+function onResizeFunc(): void {
   let width =
     window.innerWidth ||
     document.documentElement.clientWidth ||
     document.body.clientWidth;
   amountOfRandomPokemonsDisplay.value = width < 650 ? (width < 450 ? 1 : 2) : 3;
-  console.log(amountOfRandomPokemonsDisplay.value);
 }
 </script>
 
@@ -53,7 +54,6 @@ function onResizeFunc() {
       :numScroll="amountOfRandomPokemonsDisplay"
       circular
       :autoplayInterval="2000"
-      :responsiveOptions="responsiveOptions"
       class="h-full w-full"
     >
       <template #item="slotProps">

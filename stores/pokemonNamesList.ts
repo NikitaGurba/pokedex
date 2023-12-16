@@ -1,6 +1,7 @@
-import { getPokemonList } from "~/api/getPokemonsList.mjs";
+import { getPokemonList } from "~/api/getPokemonsList";
+type State = {listNames: string[]}
 export const usePokemonNamesListStore = defineStore("listNames", {
-  state: () => ({
+  state: (): State => ({
     listNames: [],
   }),
   actions: {
@@ -13,7 +14,7 @@ export const usePokemonNamesListStore = defineStore("listNames", {
           limit: count,
         };
         const respFull = await getPokemonList(interval);
-        respFull.results.map((item) => {
+        respFull.results.map((item: {name: string}) => {
           this.listNames.push(item.name);
         });
       }
